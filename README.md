@@ -1,4 +1,4 @@
-Simple Chat Application
+A Lost and Found Application
 
 To run:
 mvn clean exec:java

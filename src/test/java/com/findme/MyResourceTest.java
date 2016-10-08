@@ -1,10 +1,9 @@
-package com.chat;
+package com.findme;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-import com.findme.Main;
 import org.glassfish.grizzly.http.server.HttpServer;
 
 import org.junit.After;
@@ -43,7 +42,7 @@ public class MyResourceTest {
      */
     @Test
     public void testGetIt() {
-        String responseMsg = target.path("threads/healthcheck").request().get(String.class);
+        String responseMsg = target.path("users/healthcheck").request().get(String.class);
         assertEquals("I'm alive", responseMsg);
     }
 }

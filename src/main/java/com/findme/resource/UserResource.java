@@ -1,10 +1,8 @@
 package com.findme.resource;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.findme.DAO.ItemDAO;
-import com.findme.DAO.PersistenceUtil;
+import com.findme.util.PersistenceUtil;
 import com.findme.DAO.UserDAO;
-import com.findme.Entity.ItemEntity;
 import com.findme.Entity.UserEntity;
 import com.findme.model.User;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
@@ -13,8 +11,6 @@ import org.jboss.logging.Logger;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -38,12 +34,15 @@ public class UserResource {
     }
 
     @GET
+    @Path("/signin")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @JsonView
-    public Response getUsers() {
-        log.info("getting users");
+    public Response signIn(User user) {
+        log.info("checking password");
         UserDAO dao = PersistenceUtil.getUserDAO();
-        return Response.ok(dao.getAll()).build();
+        dao.checkUserExistence(user);
+        return Response.ok().build();
     }
 
     @POST
@@ -54,6 +53,17 @@ public class UserResource {
         log.info("adding user");
         UserDAO dao = PersistenceUtil.getUserDAO();
         UserEntity userEntity = dao.create(user);
+        return Response.ok(userEntity).build();
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @JsonView
+    public Response deleteUser(User user) {
+        log.info("deleting user");
+        UserDAO dao = PersistenceUtil.getUserDAO();
+        UserEntity userEntity = dao.delete(user);
         return Response.ok(userEntity).build();
     }
 }

@@ -25,10 +25,22 @@ public class UserEntity {
         this.name = name;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
     @Id
     @Column(name = "id")
     private String id;
 
     @Column(name = "name")
     private String name;
+
+    @Column(name="password")
+    private String password;
 }

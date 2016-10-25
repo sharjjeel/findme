@@ -1,7 +1,7 @@
 package com.findme;
 
-import com.findme.DAO.PersistenceUtil;
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import com.findme.util.JedisUtil;
+import com.findme.util.PersistenceUtil;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -39,14 +39,7 @@ public class Main {
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
 
-        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
-        Logger l = Logger.getLogger("org.glassfish.grizzly.http.server.HttpHandler");
-        l.setLevel(Level.FINE);
-        l.setUseParentHandlers(false);
-        ConsoleHandler ch = new ConsoleHandler();
-        ch.setLevel(Level.ALL);
-        l.addHandler(ch);
-        return server;
+        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
 
     }
 
@@ -60,12 +53,16 @@ public class Main {
         PersistenceUtil.buildEntityManagerFactory();
         PersistenceUtil.buildItemDAO();
         PersistenceUtil.buildUserDAO();
+        // create redis pool
+        JedisUtil.buildJedisPool();
         final HttpServer server = startServer();
 
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
         System.in.read();
         server.shutdown();
+        PersistenceUtil.killEntityManagerFactory();
+        JedisUtil.killJedisPool();
     }
 }
 

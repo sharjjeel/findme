@@ -52,28 +52,36 @@ public class Item {
         this.timestamp = timestamp;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getClaim_status() {
-        return claim_status;
-    }
-
-    public void setClaim_status(String claim_status) {
-        this.claim_status = claim_status;
-    }
-
     public String getUser_id() {
         return user_id;
     }
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public boolean isLost() {
+        return lost;
+    }
+
+    public void setLost(boolean lost) {
+        this.lost = lost;
     }
 
     @JsonView
@@ -89,22 +97,28 @@ public class Item {
     private String timestamp;
 
     @JsonView
-    private String location;
+    private double longitude;
 
     @JsonView
-    private String claim_status;
+    private double latitude;
 
     @JsonView
     private String user_id;
 
-    public boolean isLost() {
-        return lost;
-    }
-
-    public void setLost(boolean lost) {
-        this.lost = lost;
-    }
-
     @JsonView
     private boolean lost;
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", user_id='" + user_id + '\'' +
+                ", lost=" + lost +
+                '}';
+    }
 }

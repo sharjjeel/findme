@@ -11,8 +11,8 @@ create table items (
     description text,
     timestamp varchar(100),
     location varchar(100),
-    claim_status varchar(100),
-    user_id varchar(100) references users(id)
+    user_id varchar(100) references users(id),
+    lost bool
 );
  */
 @Entity(name = "items")
@@ -31,11 +31,11 @@ public class ItemEntity {
     @Column(name = "timestamp")
     private String timestamp;
 
-    @Column(name = "location")
-    private String location;
+    @Column(name = "longitude")
+    private double longitude;
 
-    @Column(name = "claim_status")
-    private String claim_status;
+    @Column(name = "latitude")
+    private double latitude;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", updatable = false)
@@ -76,22 +76,6 @@ public class ItemEntity {
         this.timestamp = timestamp;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getClaim_status() {
-        return claim_status;
-    }
-
-    public void setClaim_status(String claim_status) {
-        this.claim_status = claim_status;
-    }
-
     public UserEntity getUser() {
         return user;
     }
@@ -108,12 +92,28 @@ public class ItemEntity {
         this.lost = lost;
     }
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     public Item getObject() {
         Item item = new Item();
-        item.setClaim_status(claim_status);
         item.setDescription(description);
         item.setId(id);
-        item.setLocation(location);
+        item.setLatitude(latitude);
+        item.setLongitude(longitude);
         item.setName(name);
         item.setTimestamp(timestamp);
         item.setUser_id(user.getId());

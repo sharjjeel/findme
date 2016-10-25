@@ -6,9 +6,13 @@ mvn clean exec:java
 Then open postgres and type the following queries as admin:
 
 `create user test_username with password 'test_password';`
-`create database lostandfound`
+
+`create database lostandfound;`
+
 `grant all privileges on database lostandfound to test_username;`
-```drop table if exists items;
+
+```
+ drop table if exists items;
  drop table if exists users;
 
  create table users (
@@ -16,20 +20,22 @@ Then open postgres and type the following queries as admin:
      name varchar(100)
  );
 
- create table items (
-     id varchar(100) primary key,
-     name varchar(100),
-     description text,
-     timestamp varchar(100),
-     location varchar(100),
-     claim_status varchar(100),
-     user_id varchar(100) references users(id),
-     lost boolean
- );
+create table items (
+    id varchar(100) primary key,
+    name varchar(100),
+    description text,
+    timestamp varchar(100),
+    longitude double precision,
+    latitude double precision,
+    claim_status varchar(100),
+    user_id varchar(100) references users(id),
+    lost boolean
+);
 
  create index user_id on users (id);
  create index item_user on items (user_id);
  create index item_claims on items (claim_status);
+
 ```
 
 #Service

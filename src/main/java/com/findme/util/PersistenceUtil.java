@@ -1,8 +1,11 @@
-package com.findme.DAO;
+package com.findme.util;
 
 /**
  * Created by sharjjeel on 7/11/16.
  */
+import com.findme.DAO.ItemDAO;
+import com.findme.DAO.UserDAO;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

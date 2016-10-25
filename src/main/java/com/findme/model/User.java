@@ -18,8 +18,13 @@ create table users (
 public class User {
     @JsonView
     private String id;
+
     @JsonView
     private String name;
+
+    @JsonView
+    private String password;
+
     @OneToMany(fetch = FetchType.EAGER)
     private List<ItemEntity> items;
 
@@ -46,5 +51,13 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

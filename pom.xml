@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.findme</groupId>
-    <artifactId>new-slack</artifactId>
+    <artifactId>findme</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>new-slack</name>
+    <name>findme</name>
 
 
     <repositories>

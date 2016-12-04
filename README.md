@@ -44,17 +44,21 @@ findme
 
 #How to play with this app:
 
-Post a user: curl -X POST -H "Content-Type: application/json" -d '{"id":"sharjjeel"}' http://localhost:8080/users
+Post a user: curl -X POST -H "Content-Type: application/json" -d '{"id":"sharjjeel", "name":"sharjjeel", "password":"pa$$word"}' http://localhost:8080/users
 
 Get all items: curl -X GET http://localhost:8080/item
 
 Post an item: curl -X POST -H "Content-Type: application/json" -d '{"user_id":"sharjjeel", "name":"lost item"}' http://localhost:8080/item
 
+Put an item: curl -vv -X PUT -H "Content-Type: application/json" -d '{"id":"3feb2b72-ebbe-40c8-a3de-70263fc20aba", "user_id":"sharjjeel", "name":"lost items", "lost":"true"}' http://localhost:8080/item
+
+Get an Item in a location: curl -vv -X GET -H "Content-Type: application/json" 'http://localhost:8080/item/lostItems?longitude=0&latitude=0&radius=5'
 Tables:
 
 users (
     id varchar(100) primary key,
-    name varchar(100)
+    name varchar(100),
+    password text
 );
 
 items (
@@ -63,7 +67,6 @@ items (
     description text,
     timestamp varchar(100),
     location varchar(100),
-    claim_status varchar(100),
     user_id varchar(100) references users(id),
     lost boolean
 );

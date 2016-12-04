@@ -54,39 +54,50 @@ public class ItemResource {
     public Response getItemsBasedOnLocation(@QueryParam("longitude") double longitude,
                                             @QueryParam("latitude") double latitude,
                                             @QueryParam("radius") double radius) {
-        log.info("getting items from redis");
-        List<GeoRadiusResponse> ret;
-        try (Jedis jedis = JedisUtil.getJedis()) {
-            ret = jedis.georadius("items", longitude, latitude, radius, GeoUnit.KM);
-        }
+        log.info("getting items from redis: "+ longitude + " " + latitude);
         ItemDAO dao = PersistenceUtil.getItemDAO();
-        dao.get(ret);
-        return Response.ok(new GenericEntity<List<ItemEntity>>(dao.getAll()){}).build();
+        return Response.ok(new GenericEntity<List<ItemEntity>>(dao.get(longitude, latitude, radius)){}).build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView
     public Response addItem(Item item) {
-        log.info("adding item");
+        log.info("adding item: " + item.toString());
         if (item.getUser_id() == null) {
             throw new WebApplicationException("User must be specified", Response.Status.BAD_REQUEST);
         }
         if (item.getId() == null) {
             item.setId(UUID.randomUUID().toString());
         }
-        // add to redis
-        try (Jedis jedis = JedisUtil.getJedis()) {
-            // default to 1 week
-            jedis.geoadd("items", item.getLongitude(), item.getLatitude(), item.getId());
-        } catch (Exception e) {
-            log.error("unable to save to redis");
-        }
-        // persist data
 
         // new DAO vs same DAO?
         ItemDAO dao = PersistenceUtil.getItemDAO();
         ItemEntity itemEntity = dao.create(item);
         return Response.ok(itemEntity.getObject()).build();
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView
+    public Response update(Item item) {
+        if (item.getId() == null) {
+            throw new WebApplicationException("Id must be specified", Response.Status.BAD_REQUEST);
+        }
+        ItemDAO dao = PersistenceUtil.getItemDAO();
+        dao.update(item);
+        return Response.ok().build();
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView
+    public Response delete(Item item) {
+        if (item.getId() == null) {
+            throw new WebApplicationException("Id must be specified", Response.Status.BAD_REQUEST);
+        }
+        ItemDAO dao = PersistenceUtil.getItemDAO();
+        dao.delete(item);
+        return Response.ok().build();
     }
 }

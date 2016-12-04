@@ -3,6 +3,7 @@ package com.findme.Entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by saziz on 9/23/16.

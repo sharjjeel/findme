@@ -52,6 +52,7 @@ public class Item {
         this.timestamp = timestamp;
     }
 
+    // TODO: fix this and make it getUserId
     public String getUser_id() {
         return user_id;
     }

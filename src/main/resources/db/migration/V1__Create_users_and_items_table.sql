@@ -1,6 +1,3 @@
-drop table if exists items;
-drop table if exists users;
-
 create table users (
     id varchar(100) primary key,
     name varchar(100),
@@ -14,7 +11,6 @@ create table items (
     timestamp varchar(100),
     longitude double precision,
     latitude double precision,
-    claim_status varchar(100),
     user_id varchar(100) references users(id),
     lost boolean
 );

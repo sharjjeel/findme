@@ -5,6 +5,7 @@ import com.findme.model.User;
 import com.findme.util.PersistenceUtil;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.WebServiceException;
@@ -15,11 +16,14 @@ import java.util.List;
  */
 public class UserDAO {
     public UserEntity create(User user) {
+        if (user == null)
+            throw new WebApplicationException("User is null", Response.Status.BAD_REQUEST);
+        if (user.getName() == null) {
+            throw new WebApplicationException("User name is null", Response.Status.BAD_REQUEST);
+        }
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
 
-        if (user == null)
-            throw new WebApplicationException("User is null", Response.Status.BAD_REQUEST);
         UserEntity userEntity = makeUserEntity(user);
 
         em.persist(userEntity);
@@ -56,7 +60,7 @@ public class UserDAO {
                     UserEntity.class).setParameter("name", user.getName())
                     .setParameter("password", user.getPassword())
                     .getSingleResult();
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             throw new WebApplicationException("Unable to find user", Response.Status.FORBIDDEN);
         }
     }

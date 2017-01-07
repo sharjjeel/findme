@@ -3,15 +3,9 @@ package com.findme.util;
 /**
  * Created by sharjjeel on 7/11/16.
  */
-import com.findme.DAO.ItemDAO;
-import com.findme.DAO.UserDAO;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public class JedisUtil {
 

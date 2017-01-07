@@ -4,7 +4,6 @@ package com.findme.util;
  * Created by sharjjeel on 7/11/16.
  */
 import com.findme.DAO.ItemDAO;
-import com.findme.DAO.UserDAO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,7 +13,6 @@ public class PersistenceUtil {
 
     private static EntityManagerFactory entityManagerFactory;
     private static ItemDAO itemDAO;
-    private static UserDAO userDAO;
 
     public static void buildEntityManagerFactory() {
         if (entityManagerFactory != null) {
@@ -32,17 +30,6 @@ public class PersistenceUtil {
 
     public static ItemDAO getItemDAO() {
         return itemDAO;
-    }
-
-    public static void buildUserDAO() {
-        if (userDAO != null) {
-            return;
-        }
-        userDAO = new UserDAO();
-    }
-
-    public static UserDAO getUserDAO() {
-        return userDAO;
     }
 
     public static EntityManager getEntityManager() {

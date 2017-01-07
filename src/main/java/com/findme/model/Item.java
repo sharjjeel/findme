@@ -28,14 +28,6 @@ public class Item {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -50,15 +42,6 @@ public class Item {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
-    }
-
-    // TODO: fix this and make it getUserId
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
     }
 
     public double getLongitude() {
@@ -89,7 +72,7 @@ public class Item {
     private String id;
 
     @JsonView
-    private String name;
+    private String title;
 
     @JsonView
     private String description;
@@ -104,21 +87,37 @@ public class Item {
     private double latitude;
 
     @JsonView
-    private String user_id;
+    private boolean lost;
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     @JsonView
-    private boolean lost;
+    private String contact;
 
     @Override
     public String toString() {
         return "Item{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", timestamp='" + timestamp + '\'' +
                 ", longitude='" + longitude + '\'' +
                 ", latitude='" + latitude + '\'' +
-                ", user_id='" + user_id + '\'' +
+                ", contact='" + contact + '\'' +
                 ", lost=" + lost +
                 '}';
     }

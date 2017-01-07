@@ -1,9 +1,7 @@
 package com.findme.DAO;
 
 import com.findme.Entity.ItemEntity;
-import com.findme.Entity.UserEntity;
 import com.findme.model.Item;
-import com.findme.resource.ItemResource;
 import com.findme.util.JedisUtil;
 import com.findme.util.PersistenceUtil;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
@@ -45,7 +43,7 @@ public class ItemDAO {
         }
 
         EntityManager em = PersistenceUtil.getEntityManager();
-        return em.createQuery("SELECT o FROM items o WHERE o.id in (:ids) AND o.lost = TRUE",
+        return em.createQuery("SELECT o FROM items o WHERE o.id in (:ids)",
             ItemEntity.class).setParameter("ids", ids).getResultList();
     }
 
@@ -53,16 +51,7 @@ public class ItemDAO {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
 
-        UserEntity user;
-        try {
-            user = em.createQuery("SELECT o FROM users o where o.id = :user_id", UserEntity.class)
-                    .setParameter("user_id", item.getUser_id()).getSingleResult();
-        } catch (Exception e) {
-            log.info(e.toString());
-            throw new WebApplicationException("User doesn't exist: " + e.toString(), Response.Status.NOT_FOUND);
-        }
-
-        ItemEntity itemEntity = createItemEntity(item, user);
+        ItemEntity itemEntity = createItemEntity(item);
         em.persist(itemEntity);
         em.flush();
 
@@ -84,16 +73,9 @@ public class ItemDAO {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
 
-        UserEntity user;
-        try {
-            user = em.createQuery("SELECT o FROM users o where o.id = :user_id", UserEntity.class)
-                    .setParameter("user_id", item.getUser_id()).getSingleResult();
-        } catch (NoResultException e) {
-            throw new WebApplicationException("User doesn't exist", Response.Status.NOT_FOUND);
-        }
         // TODO: remove if it's not lost from redis
         // TODO: update redis longitude, latitude of item if that is updated
-        ItemEntity itemEntity = createItemEntity(item, user);
+        ItemEntity itemEntity = createItemEntity(item);
         em.merge(itemEntity);
         em.flush();
 
@@ -120,7 +102,7 @@ public class ItemDAO {
         return itemEntity;
     }
 
-    private ItemEntity createItemEntity(Item item, UserEntity user) {
+    private ItemEntity createItemEntity(Item item) {
         ItemEntity itemEntity = new ItemEntity();
         itemEntity.setDescription(item.getDescription());
         itemEntity.setId(item.getId());
@@ -128,8 +110,8 @@ public class ItemDAO {
         itemEntity.setLatitude(item.getLatitude());
         itemEntity.setLost(item.isLost());
         itemEntity.setTimestamp(item.getTimestamp());
-        itemEntity.setUser(user);
-        itemEntity.setName(item.getName());
+        itemEntity.setTitle(item.getTitle());
+        itemEntity.setContact(item.getContact());
         return itemEntity;
     }
 }

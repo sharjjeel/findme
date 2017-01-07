@@ -22,8 +22,8 @@ public class ItemEntity {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "description")
     private String description;
@@ -37,9 +37,24 @@ public class ItemEntity {
     @Column(name = "latitude")
     private double latitude;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", updatable = false)
-    private UserEntity user;
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Column(name = "contact")
+    private String contact;
 
     @Column(name = "lost")
     private boolean lost;
@@ -50,14 +65,6 @@ public class ItemEntity {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -74,14 +81,6 @@ public class ItemEntity {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
     }
 
     public boolean isLost() {
@@ -114,9 +113,9 @@ public class ItemEntity {
         item.setId(id);
         item.setLatitude(latitude);
         item.setLongitude(longitude);
-        item.setName(name);
+        item.setTitle(title);
+        item.setContact(contact);
         item.setTimestamp(timestamp);
-        item.setUser_id(user.getId());
         return item;
     }
 }

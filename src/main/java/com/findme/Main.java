@@ -52,7 +52,6 @@ public class Main {
         // create an entity manager factory
         PersistenceUtil.buildEntityManagerFactory();
         PersistenceUtil.buildItemDAO();
-        PersistenceUtil.buildUserDAO();
         // create redis pool
         JedisUtil.buildJedisPool();
         final HttpServer server = startServer();

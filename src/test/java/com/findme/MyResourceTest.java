@@ -42,7 +42,7 @@ public class MyResourceTest {
      */
     @Test
     public void testGetIt() {
-        String responseMsg = target.path("users/healthcheck").request().get(String.class);
+        String responseMsg = target.path("item/healthcheck").request().get(String.class);
         assertEquals("I'm alive", responseMsg);
     }
 }

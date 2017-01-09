@@ -17,6 +17,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,18 +65,19 @@ public class ItemResource {
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView
     public Response addItem(Item item) {
-        log.info("adding item: " + item.toString());
 
         item.setTimestamp(System.currentTimeMillis() + "");
         if (item.getId() == null) {
             try {
-                String id = new String(MessageDigest.getInstance("MD5").digest(item.toString().getBytes("UTF-8")));
+                String id = Base64.getEncoder().encodeToString(MessageDigest.getInstance("MD5").digest(item.toString().getBytes("UTF-8")));
                 item.setId(id);
             } catch (Exception e) {
                 log.error(e);
                 throw new WebApplicationException("Unable to create id", Response.Status.INTERNAL_SERVER_ERROR);
             }
         }
+
+        log.info("adding item: " + item.toString());
 
         // new DAO vs same DAO?
         ItemDAO dao = PersistenceUtil.getItemDAO();

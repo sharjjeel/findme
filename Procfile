@@ -1,1 +1,1 @@
-va $JAVA_OPTS -cp target/classes:target/dependency/* findme
+web:    java -jar target/findme-1.0-SNAPSHOT.jar

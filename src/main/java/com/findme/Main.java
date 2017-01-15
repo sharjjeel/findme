@@ -49,6 +49,7 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
+
         // create an entity manager factory
         PersistenceUtil.buildEntityManagerFactory();
         PersistenceUtil.buildItemDAO();

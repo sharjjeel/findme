@@ -56,7 +56,7 @@ public class ItemResource {
     public Response getItemsBasedOnLocation(@QueryParam("longitude") double longitude,
                                             @QueryParam("latitude") double latitude,
                                             @QueryParam("radius") double radius) {
-        log.info("getting items from redis: "+ longitude + " " + latitude);
+        log.info("getting items from redis: "+ longitude + " " + latitude + "and radius : " + (radius * 100) + " km");
         ItemDAO dao = PersistenceUtil.getItemDAO();
         return Response.ok(new GenericEntity<List<ItemEntity>>(dao.get(longitude, latitude, radius)){}).build();
     }

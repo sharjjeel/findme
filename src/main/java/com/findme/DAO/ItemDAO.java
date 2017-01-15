@@ -34,7 +34,7 @@ public class ItemDAO {
         // get list of items ids from redis
         List<GeoRadiusResponse> ret;
         try (Jedis jedis = JedisUtil.getJedis()) {
-            ret = jedis.georadius("items", longitude, latitude, radius, GeoUnit.KM);
+            ret = jedis.georadius("items", longitude, latitude, radius * 100, GeoUnit.KM);
         }
 
         List<String> ids = new ArrayList<>();
@@ -43,8 +43,12 @@ public class ItemDAO {
         }
 
         EntityManager em = PersistenceUtil.getEntityManager();
-        return em.createQuery("SELECT o FROM items o WHERE o.id in (:ids)",
-            ItemEntity.class).setParameter("ids", ids).getResultList();
+        if (ids.size() == 0)
+            return new ArrayList<>();
+        else {
+            return em.createQuery("SELECT o FROM items o WHERE o.id IN :list", ItemEntity.class)
+                    .setParameter("list", ids).getResultList();
+        }
     }
 
     public ItemEntity create(Item item) {

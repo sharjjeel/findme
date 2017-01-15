@@ -116,6 +116,7 @@ public class ItemEntity {
         item.setTitle(title);
         item.setContact(contact);
         item.setTimestamp(timestamp);
+        item.setLost(lost);
         return item;
     }
 }

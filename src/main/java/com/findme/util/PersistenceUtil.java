@@ -46,7 +46,7 @@ public class PersistenceUtil {
             HashMap<String, String> properties = new HashMap<>();
             properties.put(SCHEMA_GENERATION_DATABASE_ACTION, "none");
             properties.put(JDBC_DRIVER, "org.postgresql.Driver");
-            properties.put(JDBC_URL, "jdbc:postgres://" + uri.getHost() + ":" + uri.getPort() + uri.getPath());
+            properties.put(JDBC_URL, "jdbc:postgresql://" + uri.getHost() + ":" + uri.getPort() + uri.getPath());
             properties.put(JDBC_USER, uri.getUserInfo().split(":")[0]);
             properties.put(JDBC_PASSWORD, uri.getUserInfo().split(":")[1]);
             properties.put("hibernate.hbm2ddl.auto", "update");

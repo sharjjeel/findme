@@ -6,6 +6,7 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
+import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.logging.ConsoleHandler;
@@ -39,7 +40,11 @@ public class Main {
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
 
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+        URI url = URI.create(BASE_URI);
+        if (System.getenv("PORT") != null) {
+            url = UriBuilder.fromUri("http://0.0.0.0/").port(Integer.valueOf(System.getenv("PORT"))).build();
+        }
+        return GrizzlyHttpServerFactory.createHttpServer(url, rc);
 
     }
 

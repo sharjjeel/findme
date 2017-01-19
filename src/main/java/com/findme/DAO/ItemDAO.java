@@ -26,6 +26,7 @@ public class ItemDAO {
 
     public List<ItemEntity> getAll() {
         EntityManager em = PersistenceUtil.getEntityManager();
+        log.info("Created EM, querying...");
         return em.createQuery("SELECT o FROM items o", ItemEntity.class).getResultList();
     }
 

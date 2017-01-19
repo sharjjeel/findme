@@ -55,7 +55,7 @@ public class PersistenceUtil {
             properties.put("hibernate.show_sql", "true");
             properties.put("hibernate.use_sql_comments", "true");
             properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL82Dialect");
-            Persistence.createEntityManagerFactory("manager1", properties);
+            Persistence.createEntityManagerFactory("manager2", properties);
         } else {
             entityManagerFactory = Persistence.createEntityManagerFactory("manager1");
         }

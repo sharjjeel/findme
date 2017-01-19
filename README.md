@@ -72,3 +72,8 @@ items (
 );
 
 Add fields to cURL's data section
+
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/lostandfound" />
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.user" value="test_username" />
+            <property name="javax.persistence.jdbc.password" value="test_password" />

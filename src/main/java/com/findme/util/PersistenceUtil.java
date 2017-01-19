@@ -42,7 +42,6 @@ public class PersistenceUtil {
         </properties>
 
              */
-            System.out.println("Setting up env with db: " + databaseUrl);
             URI uri = URI.create(databaseUrl);
             HashMap<String, String> properties = new HashMap<>();
             properties.put(SCHEMA_GENERATION_DATABASE_ACTION, "none");

@@ -35,7 +35,7 @@ public class ItemResource {
     @Path("/healthcheck")
     @Produces(MediaType.TEXT_PLAIN)
     public String healthCheck() {
-        return "I'm alive";
+        return "Upsexy jokes are good jokes";
     }
 
     @GET

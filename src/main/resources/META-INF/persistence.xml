@@ -11,6 +11,10 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/lostandfound" />
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.user" value="test_username" />
+            <property name="javax.persistence.jdbc.password" value="test_password" />
         </properties>
     </persistence-unit>
 </persistence>

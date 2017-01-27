@@ -1,5 +1,6 @@
 package com.findme;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.findme.util.JedisUtil;
 import com.findme.util.PersistenceUtil;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -30,11 +31,12 @@ public class Main {
         // in com.chat package
         final ResourceConfig rc = new ResourceConfig().packages("com.findme");
 
+//        rc.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, true);
         // uncomment the following line if you want to enable
         // support for JSON on the service (you also have to uncomment
         // dependency on jersey-media-json module in pom.xml)
         // --
-//        rc.register(JacksonJaxbJsonProvider.class);
+        rc.register(JacksonJaxbJsonProvider.class);
 //        rc.addBinder(org.glassfish.jersey.media.json.JsonJaxbBinder);
 
         // create and start a new instance of grizzly http server

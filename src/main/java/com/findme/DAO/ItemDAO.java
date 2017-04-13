@@ -30,6 +30,12 @@ public class ItemDAO {
         return em.createQuery("SELECT o FROM items o", ItemEntity.class).getResultList();
     }
 
+    public ItemEntity get(String id) {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        log.info("Created EM, querying...");
+        return em.createQuery("SELECT o FROM items o WHERE o.id=:id", ItemEntity.class).setParameter("id", id).getSingleResult();
+    }
+
     public List<ItemEntity> get(double longitude, double latitude, double radius) {
 
         // get list of items ids from redis

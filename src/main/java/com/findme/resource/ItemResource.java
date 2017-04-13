@@ -50,6 +50,22 @@ public class ItemResource {
     }
 
     @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView
+    public Response getItem(@PathParam("id") String id) {
+        log.info("getting items");
+        // use Inject?
+        ItemDAO dao = PersistenceUtil.getItemDAO();
+        ItemEntity item = dao.get(id);
+        log.info(item);
+
+        return Response.ok(item.getObject()).build();
+    }
+
+
+
+    @GET
     @Path("/items")
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView
